@@ -1,6 +1,9 @@
 package clubhouse
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type CreateEpic struct {
 	CreatedAt   time.Time `json:"created_at"`
@@ -39,4 +42,50 @@ type UpdateEpic struct {
 	Name        string    `json:"name"`
 	OwnerIds    []string  `json:"owner_ids"`
 	State       string    `json:"state"`
+}
+
+func (ch *Clubhouse) GetEpic(epicID int64) (Epic, error) {
+	body, err := ch.getResource("epics", epicID)
+	if err != nil {
+		return Epic{}, err
+	}
+	epic := Epic{}
+	json.Unmarshal(body, &epic)
+	return epic, nil
+}
+
+func (ch *Clubhouse) UpdateEpic(updatedEpic UpdateEpic, epicID int64) (Epic, error) {
+	jsonStr, _ := json.Marshal(updatedEpic)
+	body, err := ch.updateResource("epics", epicID, jsonStr)
+	if err != nil {
+		return Epic{}, err
+	}
+	epic := Epic{}
+	json.Unmarshal(body, &epic)
+	return epic, nil
+}
+
+func (ch *Clubhouse) DeleteEpic(epicID int64) error {
+	return ch.deleteResource("epics", epicID)
+}
+
+func (ch *Clubhouse) ListEpics() ([]Epic, error) {
+	body, err := ch.listResources("epics")
+	if err != nil {
+		return []Epic{}, err
+	}
+	epics := []Epic{}
+	json.Unmarshal(body, &epics)
+	return epics, nil
+}
+
+func (ch *Clubhouse) CreateEpic(newEpic CreateEpic) (Epic, error) {
+	jsonStr, _ := json.Marshal(newEpic)
+	body, err := ch.createObject("epics", jsonStr)
+	if err != nil {
+		return Epic{}, err
+	}
+	epic := Epic{}
+	json.Unmarshal(body, &epic)
+	return epic, nil
 }

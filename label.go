@@ -1,6 +1,9 @@
 package clubhouse
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type CreateLabel struct {
 	ExternalID string `json:"external_id"`
@@ -19,4 +22,41 @@ type LabelWithCounts struct {
 
 type UpdateLabel struct {
 	Name string `json:"name"`
+}
+
+func (ch *Clubhouse) ListLabels() ([]LabelWithCounts, error) {
+	body, err := ch.listResources("labels")
+	if err != nil {
+		return []LabelWithCounts{}, err
+	}
+	labels := []LabelWithCounts{}
+	json.Unmarshal(body, &labels)
+	return labels, nil
+}
+
+func (ch *Clubhouse) CreateLabel(newLabel CreateLabel) (LabelWithCounts, error) {
+	jsonStr, _ := json.Marshal(newLabel)
+
+	body, err := ch.createObject("labels", jsonStr)
+	if err != nil {
+		return LabelWithCounts{}, err
+	}
+	label := LabelWithCounts{}
+	json.Unmarshal(body, &label)
+	return label, nil
+}
+
+func (ch *Clubhouse) UpdateLabel(updatedLabel UpdateLabel, labelID int64) (LabelWithCounts, error) {
+	jsonStr, _ := json.Marshal(updatedLabel)
+	body, err := ch.updateResource("labels", labelID, jsonStr)
+	if err != nil {
+		return LabelWithCounts{}, err
+	}
+	label := LabelWithCounts{}
+	json.Unmarshal(body, &label)
+	return label, nil
+}
+
+func (ch *Clubhouse) DeleteLabel(labelID int64) error {
+	return ch.deleteResource("labels", labelID)
 }
