@@ -21,18 +21,18 @@ type Epic struct {
 	Deadline    time.Time `json:"deadline"`
 	Description string    `json:"description"`
 	FollowerIds []string  `json:"follower_ids"`
-	ID          int       `json:"id"`
+	ID          int64     `json:"id"`
 	Name        string    `json:"name"`
 	OwnerIds    []string  `json:"owner_ids"`
-	Position    int       `json:"position"`
+	Position    int64     `json:"position"`
 	State       string    `json:"state"`
 	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 type UpdateEpic struct {
-	AfterID     int       `json:"after_id"`
+	AfterID     int64     `json:"after_id"`
 	Archived    bool      `json:"archived"`
-	BeforeID    int       `json:"before_id"`
+	BeforeID    int64     `json:"before_id"`
 	Deadline    time.Time `json:"deadline"`
 	Description string    `json:"description"`
 	FollowerIds []string  `json:"follower_ids"`
