@@ -15,18 +15,18 @@ type CreateEpic struct {
 }
 
 type Epic struct {
-	Archived    bool      `json:"archived"`
-	Comments    []Comment `json:"comments"`
-	CreatedAt   time.Time `json:"created_at"`
-	Deadline    time.Time `json:"deadline"`
-	Description string    `json:"description"`
-	FollowerIds []string  `json:"follower_ids"`
-	ID          int64     `json:"id"`
-	Name        string    `json:"name"`
-	OwnerIds    []string  `json:"owner_ids"`
-	Position    int64     `json:"position"`
-	State       string    `json:"state"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	Archived    bool              `json:"archived"`
+	Comments    []ThreadedComment `json:"comments"`
+	CreatedAt   time.Time         `json:"created_at"`
+	Deadline    time.Time         `json:"deadline"`
+	Description string            `json:"description"`
+	FollowerIds []string          `json:"follower_ids"`
+	ID          int64             `json:"id"`
+	Name        string            `json:"name"`
+	OwnerIds    []string          `json:"owner_ids"`
+	Position    int64             `json:"position"`
+	State       string            `json:"state"`
+	UpdatedAt   time.Time         `json:"updated_at"`
 }
 
 type UpdateEpic struct {
