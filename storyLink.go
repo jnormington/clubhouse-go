@@ -1,6 +1,9 @@
 package clubhouse
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"time"
+)
 
 type CreateStoryLink struct {
 	ObjectID  int64  `json:"object_id"`
@@ -8,12 +11,12 @@ type CreateStoryLink struct {
 	Verb      string `json:"verb"`
 }
 type StoryLink struct {
-	CreatedAt string `json:"created_at"`
-	ID        int64  `json:"id"`
-	ObjectID  int64  `json:"object_id"`
-	SubjectID int64  `json:"subject_id"`
-	UpdatedAt string `json:"updated_at"`
-	Verb      string `json:"verb"`
+	CreatedAt time.Time `json:"created_at"`
+	ID        int64     `json:"id"`
+	ObjectID  int64     `json:"object_id"`
+	SubjectID int64     `json:"subject_id"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Verb      string    `json:"verb"`
 }
 
 func (ch *Clubhouse) CreateStoryLink(newCreateStoryLink CreateStoryLink) (StoryLink, error) {

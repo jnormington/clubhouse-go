@@ -39,7 +39,7 @@ type UpdateProject struct {
 	Name         string   `json:"name"`
 }
 
-func (ch *Clubhouse) ListProject() ([]Project, error) {
+func (ch *Clubhouse) ListProjects() ([]Project, error) {
 	body, err := ch.listResources("projects")
 	if err != nil {
 		return []Project{}, err
