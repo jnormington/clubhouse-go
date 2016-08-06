@@ -2,6 +2,7 @@ package clubhouse
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -31,7 +32,7 @@ type CHUpdateFile struct {
 }
 
 func (ch *Clubhouse) GetFile(fileID int64) (CHFile, error) {
-	body, err := ch.getResource("files", fileID)
+	body, err := ch.getResource(fmt.Sprintf("%s/%d", "files", fileID))
 	if err != nil {
 		return CHFile{}, err
 	}
@@ -42,7 +43,7 @@ func (ch *Clubhouse) GetFile(fileID int64) (CHFile, error) {
 
 func (ch *Clubhouse) UpdateFile(updatedFile CHUpdateFile, fileID int64) (CHFile, error) {
 	jsonStr, _ := json.Marshal(updatedFile)
-	body, err := ch.updateResource("files", fileID, jsonStr)
+	body, err := ch.updateResource(fmt.Sprintf("%s/%d", "files", fileID), jsonStr)
 	if err != nil {
 		return CHFile{}, err
 	}
@@ -52,7 +53,7 @@ func (ch *Clubhouse) UpdateFile(updatedFile CHUpdateFile, fileID int64) (CHFile,
 }
 
 func (ch *Clubhouse) DeleteFile(fileID int64) error {
-	return ch.deleteResource("files", fileID)
+	return ch.deleteResource(fmt.Sprintf("%s/%d", "files", fileID))
 }
 
 func (ch *Clubhouse) ListFiles() ([]CHFile, error) {

@@ -2,6 +2,7 @@ package clubhouse
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -45,7 +46,7 @@ type UpdateEpic struct {
 }
 
 func (ch *Clubhouse) GetEpic(epicID int64) (Epic, error) {
-	body, err := ch.getResource("epics", epicID)
+	body, err := ch.getResource(fmt.Sprintf("%s/%d", "epics", epicID))
 	if err != nil {
 		return Epic{}, err
 	}
@@ -56,7 +57,7 @@ func (ch *Clubhouse) GetEpic(epicID int64) (Epic, error) {
 
 func (ch *Clubhouse) UpdateEpic(updatedEpic UpdateEpic, epicID int64) (Epic, error) {
 	jsonStr, _ := json.Marshal(updatedEpic)
-	body, err := ch.updateResource("epics", epicID, jsonStr)
+	body, err := ch.updateResource(fmt.Sprintf("%s/%d", "epics", epicID), jsonStr)
 	if err != nil {
 		return Epic{}, err
 	}
@@ -66,7 +67,7 @@ func (ch *Clubhouse) UpdateEpic(updatedEpic UpdateEpic, epicID int64) (Epic, err
 }
 
 func (ch *Clubhouse) DeleteEpic(epicID int64) error {
-	return ch.deleteResource("epics", epicID)
+	return ch.deleteResource(fmt.Sprintf("%s/%d", "epics", epicID))
 }
 
 func (ch *Clubhouse) ListEpics() ([]Epic, error) {

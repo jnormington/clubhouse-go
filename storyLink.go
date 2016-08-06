@@ -2,6 +2,7 @@ package clubhouse
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -32,7 +33,7 @@ func (ch *Clubhouse) CreateStoryLink(newCreateStoryLink CreateStoryLink) (StoryL
 }
 
 func (ch *Clubhouse) GetStoryLink(storyLinkID int64) (StoryLink, error) {
-	body, err := ch.getResource("story-links", storyLinkID)
+	body, err := ch.getResource(fmt.Sprintf("%s/%d", "story-links", storyLinkID))
 	if err != nil {
 		return StoryLink{}, err
 	}
@@ -42,5 +43,5 @@ func (ch *Clubhouse) GetStoryLink(storyLinkID int64) (StoryLink, error) {
 }
 
 func (ch *Clubhouse) DeleteStoryLink(storyLinkID int64) error {
-	return ch.deleteResource("story-links", storyLinkID)
+	return ch.deleteResource(fmt.Sprintf("%s/%d", "story-links", storyLinkID))
 }

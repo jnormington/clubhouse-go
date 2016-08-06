@@ -2,6 +2,7 @@ package clubhouse
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -48,7 +49,7 @@ func (ch *Clubhouse) CreateLabel(newLabel CreateLabel) (LabelWithCounts, error) 
 
 func (ch *Clubhouse) UpdateLabel(updatedLabel UpdateLabel, labelID int64) (LabelWithCounts, error) {
 	jsonStr, _ := json.Marshal(updatedLabel)
-	body, err := ch.updateResource("labels", labelID, jsonStr)
+	body, err := ch.updateResource(fmt.Sprintf("%s/%d", "labels", labelID), jsonStr)
 	if err != nil {
 		return LabelWithCounts{}, err
 	}
@@ -58,5 +59,5 @@ func (ch *Clubhouse) UpdateLabel(updatedLabel UpdateLabel, labelID int64) (Label
 }
 
 func (ch *Clubhouse) DeleteLabel(labelID int64) error {
-	return ch.deleteResource("labels", labelID)
+	return ch.deleteResource(fmt.Sprintf("%s/%d", "labels", labelID))
 }

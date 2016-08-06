@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+const apiURL string = "https://api.clubhouse.io/api/v1/"
+
 type Clubhouse struct {
 	Token  string
 	Client *http.Client
@@ -19,21 +21,12 @@ func New(token string) *Clubhouse {
 	}
 }
 
-func getURL(resource string, token string) string {
-	return fmt.Sprintf("%s%s?token=%s", "https://api.clubhouse.io/api/v1/", resource, token)
-}
-func getURLWithID(resource string, resourceID int64, token string) string {
-	return fmt.Sprintf("%s%s/%d?token=%s", "https://api.clubhouse.io/api/v1/", resource, resourceID, token)
-}
-func getURLWithSubResource(resource string, resourceID int64, subResource string, token string) string {
-	return fmt.Sprintf("%s%s/%d/%s?token=%s", "https://api.clubhouse.io/api/v1/", resource, resourceID, subResource, token)
-}
-func getURLWithSubResourceWithID(resource string, resourceID int64, subResource string, subResourceID int64, token string) string {
-	return fmt.Sprintf("%s%s/%d/%s/%d?token=%s", "https://api.clubhouse.io/api/v1/", resource, resourceID, subResource, subResourceID, token)
+func (ch *Clubhouse) getURL(resource string) string {
+	return fmt.Sprintf("%s%s?token=%s", apiURL, resource, ch.Token)
 }
 
-func (ch *Clubhouse) getResource(resource string, resourceID int64) ([]byte, error) {
-	req, err := http.NewRequest("GET", getURLWithID(resource, resourceID, ch.Token), nil)
+func (ch *Clubhouse) getResource(resource string) ([]byte, error) {
+	req, err := http.NewRequest("GET", ch.getURL(resource), nil)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -48,8 +41,8 @@ func (ch *Clubhouse) getResource(resource string, resourceID int64) ([]byte, err
 	return ioutil.ReadAll(resp.Body)
 }
 
-func (ch *Clubhouse) updateResource(resource string, resourceID int64, jsonStr []byte) ([]byte, error) {
-	req, err := http.NewRequest("PUT", getURLWithID(resource, resourceID, ch.Token), bytes.NewBuffer(jsonStr))
+func (ch *Clubhouse) updateResource(resource string, jsonStr []byte) ([]byte, error) {
+	req, err := http.NewRequest("PUT", ch.getURL(resource), bytes.NewBuffer(jsonStr))
 	if err != nil {
 		return []byte{}, err
 	}
@@ -68,8 +61,8 @@ func (ch *Clubhouse) updateResource(resource string, resourceID int64, jsonStr [
 	return ioutil.ReadAll(resp.Body)
 }
 
-func (ch *Clubhouse) deleteResource(resource string, resourceID int64) error {
-	req, err := http.NewRequest("DELETE", getURLWithID(resource, resourceID, ch.Token), nil)
+func (ch *Clubhouse) deleteResource(resource string) error {
+	req, err := http.NewRequest("DELETE", ch.getURL(resource), nil)
 	if err != nil {
 		return err
 	}
@@ -87,7 +80,7 @@ func (ch *Clubhouse) deleteResource(resource string, resourceID int64) error {
 }
 
 func (ch *Clubhouse) listResources(resource string) ([]byte, error) {
-	req, err := http.NewRequest("GET", getURL(resource, ch.Token), nil)
+	req, err := http.NewRequest("GET", ch.getURL(resource), nil)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -103,7 +96,7 @@ func (ch *Clubhouse) listResources(resource string) ([]byte, error) {
 }
 
 func (ch *Clubhouse) createObject(resource string, jsonStr []byte) ([]byte, error) {
-	req, err := http.NewRequest("POST", getURL(resource, ch.Token), bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("POST", ch.getURL(resource), bytes.NewBuffer(jsonStr))
 	if err != nil {
 		return []byte{}, err
 	}

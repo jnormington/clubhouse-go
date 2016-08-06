@@ -2,6 +2,7 @@ package clubhouse
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -67,7 +68,7 @@ func (ch *Clubhouse) ListStories(projectID int64) error {
 }
 
 func (ch *Clubhouse) GetProject(projectID int64) (Project, error) {
-	body, err := ch.getResource("projects", projectID)
+	body, err := ch.getResource(fmt.Sprintf("%s/%d", "projects", projectID))
 	if err != nil {
 		return Project{}, err
 	}
@@ -78,7 +79,7 @@ func (ch *Clubhouse) GetProject(projectID int64) (Project, error) {
 
 func (ch *Clubhouse) UpdateProject(updatedProject UpdateProject, projectID int64) (Project, error) {
 	jsonStr, _ := json.Marshal(updatedProject)
-	body, err := ch.updateResource("projects", projectID, jsonStr)
+	body, err := ch.updateResource(fmt.Sprintf("%s/%d", "projects", projectID), jsonStr)
 	if err != nil {
 		return Project{}, err
 	}
@@ -88,5 +89,5 @@ func (ch *Clubhouse) UpdateProject(updatedProject UpdateProject, projectID int64
 }
 
 func (ch *Clubhouse) DeleteProject(projectID int64) error {
-	return ch.deleteResource("projects", projectID)
+	return ch.deleteResource(fmt.Sprintf("%s/%d", "projects", projectID))
 }

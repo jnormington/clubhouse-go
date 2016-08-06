@@ -2,6 +2,7 @@ package clubhouse
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -26,7 +27,7 @@ type Permission struct {
 }
 
 func (ch *Clubhouse) GetUser(userID int64) (User, error) {
-	body, err := ch.getResource("users", userID)
+	body, err := ch.getResource(fmt.Sprintf("%s/%d", "users", userID))
 	if err != nil {
 		return User{}, err
 	}

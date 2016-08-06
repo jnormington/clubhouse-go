@@ -24,7 +24,7 @@ type State struct {
 }
 
 func (ch *Clubhouse) ListWorkflow() ([]Workflow, error) {
-	body, err := ch.listResources("users")
+	body, err := ch.listResources("workflows")
 	if err != nil {
 		return []Workflow{}, err
 	}
