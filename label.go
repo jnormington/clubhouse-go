@@ -21,6 +21,13 @@ type LabelWithCounts struct {
 	UpdatedAt            time.Time `json:"updated_at"`
 }
 
+type Label struct {
+	CreatedAt time.Time `json:"created_at"`
+	ID        int64     `json:"id"`
+	Name      string    `json:"name"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
 type UpdateLabel struct {
 	Name string `json:"name"`
 }

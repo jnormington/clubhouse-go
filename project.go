@@ -62,9 +62,14 @@ func (ch *Clubhouse) CreateProject(newProject CreateProject) (Project, error) {
 	return project, nil
 }
 
-func (ch *Clubhouse) ListStories(projectID int64) error {
-	// TODO Once Stories Are Done
-	return nil
+func (ch *Clubhouse) ListStories(projectID int64) ([]Story, error) {
+	body, err := ch.listResources(fmt.Sprintf("%s/%d/%s", "projects", projectID, "stories"))
+	if err != nil {
+		return []Story{}, err
+	}
+	stories := []Story{}
+	json.Unmarshal(body, &stories)
+	return stories, nil
 }
 
 func (ch *Clubhouse) GetProject(projectID int64) (Project, error) {
