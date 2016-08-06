@@ -22,9 +22,14 @@ func New(token string) *Clubhouse {
 func getURL(resource string, token string) string {
 	return fmt.Sprintf("%s%s?token=%s", "https://api.clubhouse.io/api/v1/", resource, token)
 }
-
 func getURLWithID(resource string, resourceID int64, token string) string {
 	return fmt.Sprintf("%s%s/%d?token=%s", "https://api.clubhouse.io/api/v1/", resource, resourceID, token)
+}
+func getURLWithSubResource(resource string, resourceID int64, subResource string, token string) string {
+	return fmt.Sprintf("%s%s/%d/%s?token=%s", "https://api.clubhouse.io/api/v1/", resource, resourceID, subResource, token)
+}
+func getURLWithSubResourceWithID(resource string, resourceID int64, subResource string, subResourceID int64, token string) string {
+	return fmt.Sprintf("%s%s/%d/%s/%d?token=%s", "https://api.clubhouse.io/api/v1/", resource, resourceID, subResource, subResourceID, token)
 }
 
 func (ch *Clubhouse) getResource(resource string, resourceID int64) ([]byte, error) {
