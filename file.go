@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// A CHFile is any document uploaded to your Clubhouse. Files attached from a third-party service can be accessed using the Linked Files endpoint.
 type CHFile struct {
 	ContentType  string    `json:"content_type"`
 	CreatedAt    time.Time `json:"created_at"`
@@ -22,6 +23,7 @@ type CHFile struct {
 	URL          string    `json:"url"`
 }
 
+//CHUpdateFile is the body used for ch.FileUpdate()
 type CHUpdateFile struct {
 	CreatedAt   time.Time `json:"created_at"`
 	Description string    `json:"description"`
@@ -31,7 +33,9 @@ type CHUpdateFile struct {
 	UploaderID  string    `json:"uploader_id"`
 }
 
-func (ch *Clubhouse) GetFile(fileID int64) (CHFile, error) {
+// FileGet returns information about the selected File.
+// Calls GET https://api.clubhouse.io/api/v1/files/{fileID}
+func (ch *Clubhouse) FileGet(fileID int64) (CHFile, error) {
 	body, err := ch.getResource(fmt.Sprintf("%s/%d", "files", fileID))
 	if err != nil {
 		return CHFile{}, err
@@ -41,7 +45,9 @@ func (ch *Clubhouse) GetFile(fileID int64) (CHFile, error) {
 	return file, nil
 }
 
-func (ch *Clubhouse) UpdateFile(updatedFile CHUpdateFile, fileID int64) (CHFile, error) {
+// FileUpdate can used to update the properties of a file uploaded to Clubhouse.
+// Calls PUT https://api.clubhouse.io/api/v1/files/{fileID}
+func (ch *Clubhouse) FileUpdate(updatedFile CHUpdateFile, fileID int64) (CHFile, error) {
 	jsonStr, _ := json.Marshal(updatedFile)
 	body, err := ch.updateResource(fmt.Sprintf("%s/%d", "files", fileID), jsonStr)
 	if err != nil {
@@ -52,11 +58,15 @@ func (ch *Clubhouse) UpdateFile(updatedFile CHUpdateFile, fileID int64) (CHFile,
 	return file, nil
 }
 
-func (ch *Clubhouse) DeleteFile(fileID int64) error {
+// FileDelete can be used to delete any previously attached File.
+// Calls DELETE https://api.clubhouse.io/api/v1/files/{fileID}
+func (ch *Clubhouse) FileDelete(fileID int64) error {
 	return ch.deleteResource(fmt.Sprintf("%s/%d", "files", fileID))
 }
 
-func (ch *Clubhouse) ListFiles() ([]CHFile, error) {
+// FileList returns a list of all Files and related attributes in your Clubhouse.
+// Calls GET https://api.clubhouse.io/api/v1/files
+func (ch *Clubhouse) FileList() ([]CHFile, error) {
 	body, err := ch.listResources("files")
 	if err != nil {
 		return []CHFile{}, err

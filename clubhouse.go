@@ -9,11 +9,13 @@ import (
 
 const apiURL string = "https://api.clubhouse.io/api/v1/"
 
+// Clubhouse is a struct containing the token, and the http.Client used for sending the data to the clubhouse API.
 type Clubhouse struct {
 	Token  string
 	Client *http.Client
 }
 
+// New creates a new instance of the Clubhouse object that is used to send data to ClubHouse
 func New(token string) *Clubhouse {
 	return &Clubhouse{
 		Token:  token,
