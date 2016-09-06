@@ -8,10 +8,10 @@ import (
 
 type CreateStory struct {
 	Comments        []CreateComment   `json:"comments"`
-	CreatedAt       time.Time         `json:"created_at"`
-	Deadline        time.Time         `json:"deadline"`
+	CreatedAt       *time.Time        `json:"created_at,omitempty"`
+	Deadline        *time.Time        `json:"deadline,omitempty"`
 	Description     string            `json:"description"`
-	EpicID          int64             `json:"epic_id"`
+	EpicID          int64             `json:"epic_id,omitempty"`
 	Estimate        int64             `json:"estimate"`
 	ExternalID      string            `json:"external_id"`
 	FileIds         []int64           `json:"file_ids"`
