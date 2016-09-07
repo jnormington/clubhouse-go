@@ -27,8 +27,8 @@ type CreateLinkedFile struct {
 	Description  string `json:"description"`
 	Name         string `json:"name"`
 	Size         int64  `json:"size"`
-	StoryID      int64  `json:"story_id"`
-	ThumbnailURL string `json:"thumbnail_url"`
+	StoryID      int64  `json:"story_id,omitempty"`
+	ThumbnailURL string `json:"thumbnail_url,omitempty"`
 	Type         string `json:"type"`
 	UploaderID   string `json:"uploader_id"`
 	URL          string `json:"url"`
@@ -85,7 +85,12 @@ func (ch *Clubhouse) CreateLinkedFiles(newLinkedFile CreateLinkedFile) (LinkedFi
 	if err != nil {
 		return LinkedFile{}, err
 	}
+
 	file := LinkedFile{}
-	json.Unmarshal(body, &file)
+	err = json.Unmarshal(body, &file)
+	if err != nil {
+		return LinkedFile{}, err
+	}
+
 	return file, nil
 }
