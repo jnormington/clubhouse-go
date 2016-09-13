@@ -25,7 +25,7 @@ type CreateStory struct {
 	StoryLinks      []CreateStoryLink `json:"story_links"`
 	StoryType       string            `json:"story_type"`
 	Tasks           []CreateTask      `json:"tasks"`
-	UpdatedAt       time.Time         `json:"updated_at"`
+	UpdatedAt       *time.Time        `json:"updated_at,omitempty"`
 	WorkflowStateID int64             `json:"workflow_state_id"`
 }
 
