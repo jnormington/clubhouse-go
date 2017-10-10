@@ -7,7 +7,7 @@ import (
 )
 
 type CreateLabel struct {
-	ExternalID string `json:"external_id"`
+	ExternalID string `json:"external_id,omitempty"`
 	Name       string `json:"name"`
 }
 
