@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-const apiURL string = "https://api.clubhouse.io/api/v1/"
+const apiURL string = "https://api.clubhouse.io/api/v2/"
 
 // Clubhouse is a struct containing the token, and the http.Client used for sending the data to the clubhouse API.
 type Clubhouse struct {

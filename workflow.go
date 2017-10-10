@@ -6,6 +6,7 @@ type Workflow struct {
 	CreatedAt      string  `json:"created_at"`
 	DefaultStateID int64   `json:"default_state_id"`
 	ID             int64   `json:"id"`
+	Name           string  `json:"name"`
 	States         []State `json:"states"`
 	UpdatedAt      string  `json:"updated_at"`
 }
