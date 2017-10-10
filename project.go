@@ -29,6 +29,7 @@ type Project struct {
 	NumPoints    int64     `json:"num_points"`
 	NumStories   int64     `json:"num_stories"`
 	UpdatedAt    time.Time `json:"updated_at"`
+	TeamID       int64     `json:"team_id"`
 }
 
 type UpdateProject struct {

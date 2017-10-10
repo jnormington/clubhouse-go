@@ -9,6 +9,7 @@ type Workflow struct {
 	Name           string  `json:"name"`
 	States         []State `json:"states"`
 	UpdatedAt      string  `json:"updated_at"`
+	TeamID         int64   `json:"team_id"`
 }
 
 type State struct {
