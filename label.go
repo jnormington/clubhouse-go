@@ -12,13 +12,20 @@ type CreateLabel struct {
 }
 
 type LabelWithCounts struct {
-	CreatedAt            time.Time `json:"created_at"`
-	ID                   int64     `json:"id"`
-	Name                 string    `json:"name"`
-	NumStoriesCompleted  int64     `json:"num_stories_completed"`
-	NumStoriesInProgress int64     `json:"num_stories_in_progress"`
-	NumStoriesTotal      int64     `json:"num_stories_total"`
-	UpdatedAt            time.Time `json:"updated_at"`
+	CreatedAt time.Time `json:"created_at"`
+	ID        int64     `json:"id"`
+	Name      string    `json:"name"`
+	Stats     struct {
+		NumEpics              int64 `json:"num_epics"`
+		NumPointsCompleted    int64 `json:"num_points_completed"`
+		NumPointsInProgress   int64 `json:"num_points_in_progress"`
+		NumPointsTotal        int64 `json:"num_points_total"`
+		NumStoriesCompleted   int64 `json:"num_stories_completed"`
+		NumStoriesInProgress  int64 `json:"num_stories_in_progress"`
+		NumStoriesTotal       int64 `json:"num_stories_total"`
+		NumStoriesUnestimated int64 `json:"num_stories_unestimated"`
+	}
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type Label struct {
