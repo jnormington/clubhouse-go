@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/http/httputil"
 )
@@ -111,7 +110,7 @@ func (ch *Clubhouse) listResources(resource string) ([]byte, error) {
 	if ch.Debug {
 		dump, err := httputil.DumpResponse(resp, true)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 		fmt.Printf("%q\n", dump)
 	}
